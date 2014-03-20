@@ -26,3 +26,15 @@ $ bundle exec rails generate rspec:install
 
 
 
+
+
+### rspec
+
+`/spec/request/static_pages.rb`を作る
+
+```
+$ bundle exec rails generate integration_test static_pages
+```
+
+*Capybara DSLをRSpecヘルパーファイルに追加する。*
+

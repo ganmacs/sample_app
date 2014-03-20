@@ -9,6 +9,10 @@ gem 'rails', '4.0.4'
 group :development, :test do
   gem 'sqlite3', '1.3.8'
   gem 'rspec-rails', '2.13.1'
+  gem 'better_errors'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem "guard-rspec", "~> 2.5.2"
 end
 
 group :test do
