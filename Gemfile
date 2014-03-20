@@ -20,6 +20,7 @@ group :test do
   gem 'capybara', '2.1.0'
 end
 
+
 # Use SCSS for stylesheets
 gem 'sass-rails', "~> 4.0.2"
 gem 'bootstrap-sass', '2.3.2.0'
