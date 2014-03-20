@@ -12,7 +12,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem "guard-rspec", "~> 2.5.2"
+  gem "guard-rspec", "2.5.2"
 end
 
 group :test do

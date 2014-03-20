@@ -63,7 +63,7 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-rspec (2.5.4)
+    guard-rspec (2.5.2)
       guard (>= 1.1)
       rspec (~> 2.11)
     hike (1.2.3)
@@ -193,7 +193,7 @@ DEPENDENCIES
   better_errors
   capybara (= 2.1.0)
   coffee-rails (= 4.0.1)
-  guard-rspec (~> 2.5.2)
+  guard-rspec (= 2.5.2)
   jbuilder (~> 1.2)
   jquery-rails (= 3.0.4)
   pg (= 0.15.1)
