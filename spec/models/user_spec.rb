@@ -33,7 +33,7 @@ describe User do
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
-                     foo@bar_baz.com foo@bar+baz.com]
+                     foo@bar_baz.com foo@bar+baz.com foo@bar..com]
       addresses.each do |invalid_address|
         @user.email = invalid_address
         expect(@user).not_to be_valid
@@ -51,7 +51,6 @@ describe User do
     end
   end
 
-
   describe "email address is already token" do
     before do
       user_with_same_email = @user.dup
@@ -61,7 +60,6 @@ describe User do
 
     it { expect(@user).not_to be_valid }
   end
-
 
   describe "when password is not present" do
     before do
@@ -74,10 +72,9 @@ describe User do
   describe "when password doesn't match confirmation" do
     before do
       @user.password_confirmation = 'mismatch'
-  end
+    end
     it { expect(@user).not_to be_valid }
   end
-
 
   describe 'return value of authenticate method' do
     before { @user.save }
@@ -97,6 +94,16 @@ describe User do
   describe 'with a password thats too short' do
     before { @user.password = @user.password_confirmation = 'a' * 5 }
     it { expect(@user).to be_invalid}
+  end
+
+  describe 'email addrsss with mixed case' do
+    let(:mixied_case_email) { 'Foo@ExAMPle.Com' }
+
+    it 'be saved as all lower-case' do
+      @user.email = mixied_case_email
+      @user.save
+      expect(@user.reload.email).to eq mixied_case_email.downcase
+    end
   end
 
 
