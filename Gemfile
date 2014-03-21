@@ -13,6 +13,7 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem "guard-rspec", "2.5.2"
+  gem 'factory_girl_rails', '4.2.1'
 end
 
 group :test do
