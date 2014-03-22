@@ -40,12 +40,14 @@ describe "UserPages" do
       end
 
       describe 'after saving the user' do
-        before { click_button submit}
+        before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com')}
 
+        it { expect(page).to have_link('Sign out') }
         it { expect(page).to have_title(user.name) }
         it { expect(page).to have_selector('div.alert.alert-success', text: 'Welcome')}
       end
+
     end
 
     it { expect(page).to have_content('Sign Up')}
