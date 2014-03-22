@@ -72,7 +72,6 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
 
       describe "in the Users controller" do
-
         describe "visiting the user index" do
           before { visit users_path }
           it { expect(page).to have_title('Sign in') }
@@ -100,6 +99,21 @@ describe "Authentication" do
         describe 'after signing in' do
           it 'should render the desired protected page' do
             expect(page).to have_title('Edit user')
+          end
+
+          describe 'when signing in agein' do
+            before do
+              delete signout_path
+              visit signin_path
+              fill_in 'Email', with: user.email
+              fill_in 'Password', with: user.password
+              click_button  'Sign in'
+            end
+
+            it 'should render the profile page' do
+              pending
+              expect(page).to have_title(user.name)
+            end
           end
         end
       end

@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_action :sign_in?
+
   def create
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
