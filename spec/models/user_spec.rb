@@ -14,7 +14,18 @@ describe User do
   it { expect(@user).to respond_to(:password_confirmation)}
   it { expect(@user).to respond_to(:remember_token)}
   it { expect(@user).to respond_to(:authenticate) }
+  it { expect(@user).to respond_to(:admin) }
   it { expect(@user).to be_valid }
+  it { should_not be_admin }
+
+  describe 'with admin attribute set to true' do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+  end
+
+  it { expect(@user).to be_admin }
 
   describe "when name is not present" do
     before { @user.name = "" }
