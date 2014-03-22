@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:index, :edit, :update]
+  before_action :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: :destory
+  before_action :admin_user, only: :destroy
 
 
   def index
@@ -40,8 +40,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def destory
-    User.find(params[:id]).destory
+  def destroy
+    User.find(params[:id]).destroy
     flash[:success] = 'User destory'
     redirect_to users_url
   end
