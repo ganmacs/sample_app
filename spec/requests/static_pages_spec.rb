@@ -30,6 +30,32 @@ describe "StaticPages" do
         end
       end
     end
+
+    describe 'should have correct micropost count' do
+      let(:user) { FactoryGirl.create(:user) }
+
+      context 'for signle post' do
+        before do
+          FactoryGirl.create(:micropost, user: user, content: 'Lorem ipsum')
+          valid_sign_in user
+          visit root_path
+        end
+
+        it { expect(page).to have_content('1 micropost')}
+      end
+
+      context 'for multi posts' do
+        before do
+          FactoryGirl.create(:micropost, user: user, content: 'Lorem ipsum')
+          FactoryGirl.create(:micropost, user: user, content: 'Dolor sit amet')
+          valid_sign_in user
+          visit root_path
+        end
+
+        it { expect(page).to have_content('2 microposts')}
+      end
+
+    end
   end
 
   describe "Help Page" do
