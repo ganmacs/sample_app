@@ -1,40 +1,5 @@
-## Rails Tutorial Section3
+# Ruby on Rails チュートリアル：サンプルアプリケーション
 
-[このページをやっていく](http://railstutorial.jp/book/ruby-on-rails-tutorial?version=4.0)
-
-### 最初
-```
-$ mkdir rails_project
-$ bundle init
-```
-
-`#gem 'rails'`のコメントを外す
-
-```
-$ bundle install --path vendor/bundle
-$ bundle exec rails new .
-```
-
-`./Gemfile`でgemfileを変更
-
-```
-$ bundle install --without production
-$ bundle update
-$ bundle
-$ bundle exec rails generate rspec:install
-```
-
-
-
-
-
-### rspec
-
-`/spec/request/static_pages.rb`を作る
-
-```
-$ bundle exec rails generate integration_test static_pages
-```
-
-*Capybara DSLをRSpecヘルパーファイルに追加する。*
-
+This is the first application for the
+[*Ruby on Rails Tutorial*](http://railstutorial.jp/)
+by [Michael Hartl](http://michaelhartl.com/).

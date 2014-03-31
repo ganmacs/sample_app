@@ -15,8 +15,47 @@ describe User do
   it { expect(@user).to respond_to(:remember_token)}
   it { expect(@user).to respond_to(:authenticate) }
   it { expect(@user).to respond_to(:admin) }
+  it { expect(@user).to respond_to(:microposts) }
+  it { expect(@user).to respond_to(:feed) }
   it { expect(@user).to be_valid }
   it { expect(@user).not_to be_admin }
+
+  describe 'micropost associations' do
+
+    before { @user.save }
+
+    let!(:older_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+    end
+
+    it 'should have the right microposts in the right order' do
+      expect(@user.microposts.to_a).to eq [newer_micropost, older_micropost]
+    end
+
+    it 'should destory associated microposts' do
+      microposts = @user.microposts.to_a
+      @user.destroy
+      expect(microposts).not_to be_empty
+      microposts.each do |micropost|
+        expect(Micropost.where(id: micropost.id)).to be_empty
+      end
+    end
+
+    describe 'status' do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost,user: FactoryGirl.create(:user))
+      end
+
+
+      it { expect(@user.feed).to include(newer_micropost) }
+      it { expect(@user.feed).to include(older_micropost) }
+      it { expect(@user.feed).not_to include(unfollowed_post) }
+    end
+
+  end
 
   describe 'with admin attribute set to true' do
     before do

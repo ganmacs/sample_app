@@ -23,14 +23,13 @@ describe "UserPages" do
           expect(page).to have_selector('li', text: user.name)
         end
       end
-
     end
 
     describe 'delete link' do
       it { expect(page).not_to have_link('Delete')}
 
       describe 'as an admin user' do
-        let(:admin) { FactoryGirl.create(:admin)}
+        let(:admin) { FactoryGirl.create(:admin) }
         before do
           valid_sign_in admin
           visit users_path
@@ -45,7 +44,6 @@ describe "UserPages" do
         it { expect(page).not_to have_link('delete', href: user_path(admin))}
       end
     end
-
   end
 
   describe 'profile page' do
@@ -149,5 +147,21 @@ describe "UserPages" do
     end
   end
 
+  describe 'profile page' do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:m1)  { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+    let!(:m2)  { FactoryGirl.create(:micropost, user: user, content: "Bar") }
+
+    before { visit user_path(user) }
+
+    it { expect(page).to have_title(user.name) }
+    it { expect(page).to have_content(user.name) }
+
+    describe 'microposts' do
+      it { expect(page).to have_content(m1.content) }
+      it { expect(page).to have_content(m2.content) }
+      it { expect(page).to have_content(user.microposts.count) }
+    end
+  end
 
 end
