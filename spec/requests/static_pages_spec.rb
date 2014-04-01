@@ -38,7 +38,7 @@ describe "StaticPages" do
         end
 
         it { expect(page).to have_link('0 following', href: following_user_path(user))}
-        it { expect(page).to have_link('1 followers', href: following_user_path(user))}
+        it { expect(page).to have_link('1 followers', href: followers_user_path(user))}
       end
     end
 
