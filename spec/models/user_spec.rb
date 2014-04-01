@@ -18,6 +18,10 @@ describe User do
   it { expect(@user).to respond_to(:microposts) }
   it { expect(@user).to respond_to(:feed) }
   it { expect(@user).to respond_to(:relationships) }
+  it { expect(@user).to respond_to(:followed_users) }
+  it { expect(@user).to respond_to(:following?) }
+  it { expect(@user).to respond_to(:follow!) }
+  it { expect(@user).to respond_to(:unfollow!) }
   it { expect(@user).to be_valid }
   it { expect(@user).not_to be_admin }
 
@@ -158,5 +162,22 @@ describe User do
     end
   end
 
+  describe 'following' do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { expect(@user).to be_following(other_user) }
+    it { expect(@user.followed_users).to include(other_user) }
+
+    describe 'and unfollowing' do
+      before { @user.unfollow!(other_user)}
+
+      it { expect(@user).not_to be_following(other_user) }
+      it { expect(@user.followed_users).not_to include(other_user) }
+    end
+  end
 
 end
