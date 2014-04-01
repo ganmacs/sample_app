@@ -17,6 +17,7 @@ describe User do
   it { expect(@user).to respond_to(:admin) }
   it { expect(@user).to respond_to(:microposts) }
   it { expect(@user).to respond_to(:feed) }
+  it { expect(@user).to respond_to(:relationships) }
   it { expect(@user).to be_valid }
   it { expect(@user).not_to be_admin }
 
