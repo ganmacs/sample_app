@@ -201,4 +201,35 @@ describe "UserPages" do
       it { expect(page).not_to have_link('Delete')}
     end
   end
+
+  describe 'following/followers' do
+    let(:user) {FactoryGirl.create(:user)}
+    let(:other_user) {FactoryGirl.create(:user)}
+    before { user.follow!(other_user) }
+
+    describe 'followed users' do
+      before {
+        valid_sign_in user
+        visit following_user_path(user)
+      }
+
+      it { expect(page).to have_title('Following')}
+      it { expect(page).to have_selector('h3', text: 'Following')}
+      it { expect(page).to have_link(other_user.name,  href: user_path(other_user))}
+    end
+
+
+    describe 'folloing users' do
+      before {
+        valid_sign_in other_user
+        visit followers_user_path(other_user)
+      }
+
+      it { expect(page).to have_title('Followers')}
+      it { expect(page).to have_selector('h3', text: 'Followers')}
+      it { expect(page).to have_link(user.name,  href: user_path(user))}
+    end
+
+  end
+
 end
