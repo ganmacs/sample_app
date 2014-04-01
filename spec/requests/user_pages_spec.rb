@@ -177,6 +177,7 @@ describe "UserPages" do
 
   describe 'profile page' do
     let(:user) { FactoryGirl.create(:user) }
+    let(:other) { FactoryGirl.create(:user) }
     let!(:m1)  { FactoryGirl.create(:micropost, user: user, content: "Foo") }
     let!(:m2)  { FactoryGirl.create(:micropost, user: user, content: "Bar") }
 
@@ -189,6 +190,15 @@ describe "UserPages" do
       it { expect(page).to have_content(m1.content) }
       it { expect(page).to have_content(m2.content) }
       it { expect(page).to have_content(user.microposts.count) }
+    end
+
+    describe 'should not have delete link with auth user' do
+      before do
+        valid_sign_in user
+        visit user_path(other)
+      end
+
+      it { expect(page).not_to have_link('Delete')}
     end
   end
 end
