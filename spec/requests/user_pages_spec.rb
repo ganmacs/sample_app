@@ -47,12 +47,40 @@ describe "UserPages" do
   end
 
   describe 'profile page' do
-    let(:user) { FactoryGirl.create(:user)}
-    before { visit user_path(user) }
-
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      31.times { |n| FactoryGirl.create(:micropost, user: user) }
+      visit user_path(user)
+    end
 
     it { expect(page).to have_content(user.name) }
     it { expect(page).to have_title(user.name) }
+
+    describe 'pagenation' do
+      after { Micropost.delete_all }
+
+      it { expect(page).to have_selector('div.pagination')}
+      it { expect(page).to have_content(user.microposts.count)}
+
+      it 'should list each posts' do
+        count = 0
+        user.microposts.paginate(page: 1).each do |micropost|
+          expect(page).to have_selector('li', text: micropost.content)
+          count += 1
+        end
+        expect(count).to eq(30)
+      end
+
+      it 'should list each posts in page 2' do
+        count = 0
+        user.microposts.paginate(page: 2).each do |micropost|
+          expect(page).to have_selector('li', text: micropost.content)
+          count += 1
+        end
+        expect(count).to eq(1)
+
+      end
+    end
   end
 
   describe "signup page" do
@@ -163,5 +191,4 @@ describe "UserPages" do
       it { expect(page).to have_content(user.microposts.count) }
     end
   end
-
 end
