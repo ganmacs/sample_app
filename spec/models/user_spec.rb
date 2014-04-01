@@ -19,6 +19,8 @@ describe User do
   it { expect(@user).to respond_to(:feed) }
   it { expect(@user).to respond_to(:relationships) }
   it { expect(@user).to respond_to(:followed_users) }
+  it { expect(@user).to respond_to(:reverse_relationships) }
+  it { expect(@user).to respond_to(:followers) }
   it { expect(@user).to respond_to(:following?) }
   it { expect(@user).to respond_to(:follow!) }
   it { expect(@user).to respond_to(:unfollow!) }
@@ -171,6 +173,10 @@ describe User do
 
     it { expect(@user).to be_following(other_user) }
     it { expect(@user.followed_users).to include(other_user) }
+
+    describe 'followed user' do
+      it { expect(other_user.followers).to include(@user)}
+    end
 
     describe 'and unfollowing' do
       before { @user.unfollow!(other_user)}
