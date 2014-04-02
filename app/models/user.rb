@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def feed
-    Micropost.where("user_id = ?", id)
+    Micropost.from_user_followed_by(self)
   end
 
   def following?(other_user)
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
+
 
   private
 
